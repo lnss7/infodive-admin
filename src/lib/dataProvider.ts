@@ -148,7 +148,7 @@ export const dataProvider: DataProvider = {
         if (isSingleton) {
             json.id = 'singleton';
         }
-        if (resource === 'paginas-hero' || resource === 'secoes-home') {
+        if (resource === 'paginas-hero' || resource === 'secoes-home' || resource === 'ctas') {
             json.id = params.id;
         }
         if (resource === 'contato-info' && json.cardBullets) {
@@ -206,7 +206,7 @@ export const dataProvider: DataProvider = {
         if (isSingleton) {
             json.id = 'singleton';
         }
-        if (resource === 'paginas-hero' || resource === 'secoes-home') {
+        if (resource === 'paginas-hero' || resource === 'secoes-home' || resource === 'ctas') {
             json.id = params.id;
         }
         return { data: json };

@@ -6,6 +6,7 @@ import {
   Edit,
   SimpleForm,
   TextInput,
+  SelectInput,
   required,
 } from 'react-admin';
 import { AdminHelpAside, AdminHelpBanner } from './AdminHelpBanner';
@@ -70,6 +71,18 @@ export const CtaEdit = () => (
       <TextInput source="titulo" validate={required()} label="Título do Bloco" fullWidth />
       <TextInput source="subtitulo" label="Subtítulo / Descrição" multiline fullWidth />
       <TextInput source="ctaTexto" label="Texto do Botão (CTA)" />
+      <SelectInput
+        source="tipoAcao"
+        label="Ação ao Clicar no Botão"
+        choices={[
+          { id: 'DRAWER', name: 'Abrir Formulário de Contato Overlay (Drawer GSAP)' },
+          { id: 'REDIRECT_HOME_CONTACT', name: 'Redirecionar para o Card de Contato da Home (/#contact)' },
+        ]}
+        defaultValue="DRAWER"
+        validate={required()}
+        fullWidth
+        helperText="Escolha se o clique no botão abre a gaveta de formulário lateral ou leva o visitante exatamente até o bloco de contato na Home."
+      />
     </SimpleForm>
   </Edit>
 );

@@ -4,9 +4,11 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1'
 
 export const authProvider: AuthProvider = {
     login: async ({ username }) => {
-        // Para ambiente local, aceita o email de administrador cadastrado.
-        // Se não tiver o prefixo "mock:", nós o adicionamos automaticamente.
-        const idToken = username.startsWith('mock:') ? username : `mock:${username}`;
+        let email = (username || '').trim();
+        if (email && !email.includes('@') && !email.startsWith('mock:')) {
+            email = `${email}@infodive.com.br`;
+        }
+        const idToken = email.startsWith('mock:') ? email : `mock:${email}`;
 
         const response = await fetch(`${apiUrl}/auth/login`, {
             method: 'POST',
@@ -16,7 +18,14 @@ export const authProvider: AuthProvider = {
 
         if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(errorText || 'Falha na autenticação');
+            let parsedMessage = 'Falha na autenticação';
+            try {
+                const errorJson = JSON.parse(errorText);
+                parsedMessage = errorJson.message || errorJson.error || parsedMessage;
+            } catch {
+                if (errorText) parsedMessage = errorText;
+            }
+            throw new Error(parsedMessage);
         }
 
         const data = await response.json();

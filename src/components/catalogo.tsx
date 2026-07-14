@@ -26,7 +26,7 @@ import { AdminHelpAside } from './AdminHelpBanner';
 
 // ─── SOLUÇÕES ──────────────────────────────────────────────────────────────
 export const SolucaoList = () => (
-  <List sort={{ field: 'ordem', order: 'ASC' }} aside={
+  <List sort={{ field: 'ordem', order: 'ASC' }} perPage={50} aside={
     <AdminHelpAside
       title="Onde este catálogo é exibido?"
       description={<>Grandes Soluções Corporativas da Infodive.<br /><br />Alimentam os cards do <strong>Bento Grid na Home</strong>, os itens no menu dropdown da <strong>Navbar</strong> e a listagem completa na página <code>/solucoes</code>.</>}
@@ -117,7 +117,7 @@ export const SolucaoCreate = () => (
 
 // ─── CATEGORIAS (TAGS) ────────────────────────────────────────────────────────
 export const CategoriaList = () => (
-  <List sort={{ field: 'ordem', order: 'ASC' }} aside={
+  <List sort={{ field: 'ordem', order: 'ASC' }} perPage={50} aside={
     <AdminHelpAside
       title="Onde estas Categorias são exibidas?"
       description={<>Categorias dos pilares corporativos (ex: <em>Segurança, Infraestrutura, Cloud</em>).<br /><br />Definem as opções no dropdown da <strong>Navbar</strong> e as abas de filtro na página <code>/solucoes</code>.</>}
@@ -156,7 +156,7 @@ export const CategoriaCreate = () => (
 
 // ─── FABRICANTES ─────────────────────────────────────────────────────────────
 export const FabricanteList = () => (
-  <List sort={{ field: 'ordem', order: 'ASC' }} aside={
+  <List sort={{ field: 'ordem', order: 'ASC' }} perPage={50} aside={
     <AdminHelpAside
       title="Onde estes Fabricantes são exibidos?"
       description={<>Parceiros tecnológicos globais (ex: <em>IBM, Red Hat, Veeam</em>).<br /><br />Exibidos na barra de logos de parceiros na <strong>Home</strong> e vinculados aos produtos cadastrados.</>}
