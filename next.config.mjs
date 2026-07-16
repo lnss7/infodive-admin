@@ -3,11 +3,41 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '8080',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: '127.0.0.1',
+        port: '8080',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.railway.app',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.up.railway.app',
+      },
+      {
         protocol: 'https',
         hostname: '**.supabase.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'infodive.com.br',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.infodive.com.br',
       },
     ],
   },
 };
 
 export default nextConfig;
+
+
