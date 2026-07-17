@@ -322,52 +322,129 @@ export const ProdutoList = () => (
   </List>
 );
 
-export const ProdutoEdit = () => (
-  <Edit title="Editar Produto">
-    <SimpleForm>
-      <TextInput source="nome" validate={required()} label="Nome" />
-      <TextInput source="slug" validate={required()} label="Slug (Ex: ibm-guardium)" />
-      <TextInput source="subcategoria" label="Subcategoria (Ex: Segurança de Dados)" />
-      
-      <ReferenceInput source="categoriaId" reference="categorias" label="Categoria (Tag)">
-        <SelectInput optionText="nome" validate={required()} />
+const ProdutoFormFields = () => (
+  <div style={{ width: '100%' }}>
+    {/* PARTE 1 — IDENTIFICAÇÃO E CLASSIFICAÇÃO */}
+    <div style={{
+      marginBottom: '2rem',
+      padding: '1.5rem',
+      backgroundColor: '#f8fafc',
+      borderRadius: '0.75rem',
+      border: '1px solid #e2e8f0'
+    }}>
+      <h3 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontSize: '1.05rem', fontWeight: 700 }}>
+        🏷️ PARTE 1 — IDENTIFICAÇÃO E CLASSIFICAÇÃO DO PRODUTO (Hero & Vitrine)
+      </h3>
+      <p style={{ margin: '0 0 1.25rem 0', color: '#64748b', fontSize: '0.85rem' }}>
+        Configure o nome, fabricante, categoria e o resumo exibido no topo da página do produto e nos cards do catálogo.
+      </p>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <TextInput source="nome" validate={required()} label="Nome do Produto (Ex: IBM Guardium, Red Hat OpenShift)" fullWidth />
+        <TextInput source="slug" validate={required()} label="Slug URL (Ex: ibm-guardium)" fullWidth />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+        <ReferenceInput source="fabricanteId" reference="fabricantes" label="Fabricante Homologado">
+          <SelectInput optionText="nome" validate={required()} fullWidth helperText="Fabricante que desenvolve o produto (ex: IBM, Lenovo)" />
+        </ReferenceInput>
+
+        <ReferenceInput source="categoriaId" reference="categorias" label="Categoria Principal (Tag)">
+          <SelectInput optionText="nome" validate={required()} fullWidth helperText="Tag de categoria principal (ex: Segurança)" />
+        </ReferenceInput>
+
+        <TextInput source="subcategoria" label="Subcategoria (Tag Secundária)" fullWidth helperText="Ex: Segurança de Dados, Armazenamento Flash" />
+      </div>
+
+      <ReferenceInput source="solucaoId" reference="solucoes" label="Solução Relacionada (Opcional)">
+        <SelectInput optionText="nome" fullWidth helperText="Vincula este produto a uma Solução Corporativa da Infodive" />
       </ReferenceInput>
 
-      <ReferenceInput source="solucaoId" reference="solucoes" label="Solução Relacionada">
-        <SelectInput optionText="nome" />
-      </ReferenceInput>
+      <TextInput source="linkOficial" label="Link Oficial do Produto (Ex: https://www.ibm.com/guardium)" fullWidth helperText="Link de destino do botão 'Ver produto' exibido no card da página do produto." />
 
-      <ReferenceInput source="fabricanteId" reference="fabricantes" label="Fabricante">
-        <SelectInput optionText="nome" validate={required()} />
-      </ReferenceInput>
+      <TextInput source="descricaoCurta" label="Descrição Curta / Resumo do Hero" multiline rows={2} fullWidth helperText="Exibida em destaque no topo da página do produto e nos cards de produtos relacionados." />
 
-      <TextInput source="descricaoCurta" label="Descrição Curta" multiline fullWidth />
-      <TextInput source="descricaoCompleta" label="Descrição Completa (Visão Geral)" multiline fullWidth />
-      
-      <BooleanInput source="destaque" label="Destaque no Catálogo?" />
-      <BooleanInput source="ativo" label="Ativo?" />
+      <div style={{ display: 'flex', gap: '2rem', marginTop: '0.5rem' }}>
+        <BooleanInput source="destaque" defaultValue={false} label="Destaque no Catálogo?" />
+        <BooleanInput source="ativo" defaultValue={true} label="Ativo no Site?" />
+      </div>
+    </div>
 
-      <ImageInput source="imagemUrl" label="Imagem Representativa do Produto (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
+    {/* PARTE 2 — CONTEÚDO EXPANDIDO E ABAS DA PÁGINA */}
+    <div style={{
+      marginBottom: '2rem',
+      padding: '1.5rem',
+      backgroundColor: '#f1f5f9',
+      borderRadius: '0.75rem',
+      border: '1px solid #cbd5e1'
+    }}>
+      <h3 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontSize: '1.05rem', fontWeight: 700 }}>
+        📄 PARTE 2 — CONTEÚDO DA PÁGINA DETALHADA (/produtos/[slug])
+      </h3>
+      <p style={{ margin: '0 0 1.25rem 0', color: '#64748b', fontSize: '0.85rem' }}>
+        Conteúdo completo exibido nas abas <strong>Visão geral</strong>, <strong>Diferenciais</strong> e <strong>Casos de uso</strong> da página do produto.
+      </p>
+
+      <TextInput source="descricaoCompleta" label="Aba 1: Visão Geral / Descrição Completa" multiline rows={4} fullWidth helperText="Texto detalhado da 1ª aba da página do produto." />
+
+      <ImageInput source="imagemUrl" label="Foto / Imagem Representativa do Produto (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
         <ImageField source="src" title="title" />
       </ImageInput>
 
-      <ReferenceArrayInput source="servicoIds" reference="servicos" label="Serviços Profissionais Relacionados (Exibidos na página do produto)">
-        <SelectArrayInput optionText="nome" helperText="Selecione os serviços profissionais da Infodive (ex: Sustentação 24/7, Implementação) prestados para este produto." />
-      </ReferenceArrayInput>
+      <div style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+        <h4 style={{ margin: '0 0 0.25rem 0', color: '#1e293b', fontSize: '0.95rem', fontWeight: 600 }}>
+          ✨ Aba 2: Diferenciais do Produto
+        </h4>
+        <p style={{ margin: '0 0 0.75rem 0', color: '#64748b', fontSize: '0.8rem' }}>
+          Adicione os pontos fortes e recursos exclusivos deste produto.
+        </p>
 
-      <ArrayInput source="diferenciais" label="Diferenciais do Produto">
-        <SimpleFormIterator>
-          <TextInput source="titulo" label="Título" validate={required()} />
-          <TextInput source="descricao" label="Descrição" multiline validate={required()} />
-        </SimpleFormIterator>
-      </ArrayInput>
+        <ArrayInput source="diferenciais" label="Lista de Diferenciais">
+          <SimpleFormIterator>
+            <TextInput source="titulo" label="Título do Diferencial" validate={required()} fullWidth />
+            <TextInput source="descricao" label="Descrição do Diferencial" multiline fullWidth />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </div>
 
-      <ArrayInput source="casosDeUso" label="Casos de Uso do Produto">
-        <SimpleFormIterator>
-          <TextInput source="titulo" label="Título" validate={required()} />
-          <TextInput source="descricao" label="Descrição" multiline validate={required()} />
-        </SimpleFormIterator>
-      </ArrayInput>
+      <div style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+        <h4 style={{ margin: '0 0 0.25rem 0', color: '#1e293b', fontSize: '0.95rem', fontWeight: 600 }}>
+          🎯 Aba 3: Casos de Uso do Produto
+        </h4>
+        <p style={{ margin: '0 0 0.75rem 0', color: '#64748b', fontSize: '0.8rem' }}>
+          Adicione cenários reais de aplicação deste produto em empresas B2B.
+        </p>
+
+        <ArrayInput source="casosDeUso" label="Lista de Casos de Uso">
+          <SimpleFormIterator>
+            <TextInput source="titulo" label="Título do Caso de Uso" validate={required()} fullWidth />
+            <TextInput source="descricao" label="Descrição do Caso de Uso" multiline fullWidth />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </div>
+
+      <div style={{
+        marginTop: '1.5rem',
+        padding: '1.25rem',
+        backgroundColor: '#ffffff',
+        borderRadius: '0.5rem',
+        border: '1px solid #e2e8f0'
+      }}>
+        <h4 style={{ margin: '0 0 0.5rem 0', color: '#1e293b', fontSize: '0.95rem', fontWeight: 600 }}>
+          ⚙️ Serviços Profissionais Vinculados
+        </h4>
+        <ReferenceArrayInput source="servicoIds" reference="servicos" label="Serviços Profissionais Prestados para este Produto">
+          <SelectArrayInput optionText="nome" helperText="Selecione quais serviços profissionais da Infodive (ex: Sustentação 24/7, Implementação, DRaaS) estão vinculados a este produto." fullWidth />
+        </ReferenceArrayInput>
+      </div>
+    </div>
+  </div>
+);
+
+export const ProdutoEdit = () => (
+  <Edit title="Editar Produto">
+    <SimpleForm>
+      <ProdutoFormFields />
     </SimpleForm>
   </Edit>
 );
@@ -375,49 +452,7 @@ export const ProdutoEdit = () => (
 export const ProdutoCreate = () => (
   <Create title="Cadastrar Produto">
     <SimpleForm>
-      <TextInput source="nome" validate={required()} label="Nome" />
-      <TextInput source="slug" validate={required()} label="Slug" />
-      <TextInput source="subcategoria" label="Subcategoria" />
-      
-      <ReferenceInput source="categoriaId" reference="categorias" label="Categoria (Tag)">
-        <SelectInput optionText="nome" validate={required()} />
-      </ReferenceInput>
-
-      <ReferenceInput source="solucaoId" reference="solucoes" label="Solução Relacionada">
-        <SelectInput optionText="nome" />
-      </ReferenceInput>
-
-      <ReferenceInput source="fabricanteId" reference="fabricantes" label="Fabricante">
-        <SelectInput optionText="nome" validate={required()} />
-      </ReferenceInput>
-
-      <TextInput source="descricaoCurta" label="Descrição Curta" multiline fullWidth />
-      <TextInput source="descricaoCompleta" label="Descrição Completa (Visão Geral)" multiline fullWidth />
-      
-      <BooleanInput source="destaque" defaultValue={false} label="Destaque no Catálogo?" />
-      <BooleanInput source="ativo" defaultValue={true} label="Ativo?" />
-
-      <ImageInput source="imagemUrl" label="Imagem Representativa do Produto (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
-        <ImageField source="src" title="title" />
-      </ImageInput>
-
-      <ReferenceArrayInput source="servicoIds" reference="servicos" label="Serviços Profissionais Relacionados (Exibidos na página do produto)">
-        <SelectArrayInput optionText="nome" helperText="Selecione os serviços profissionais da Infodive (ex: Sustentação 24/7, Implementação) prestados para este produto." />
-      </ReferenceArrayInput>
-
-      <ArrayInput source="diferenciais" label="Diferenciais do Produto">
-        <SimpleFormIterator>
-          <TextInput source="titulo" label="Título" validate={required()} />
-          <TextInput source="descricao" label="Descrição" multiline validate={required()} />
-        </SimpleFormIterator>
-      </ArrayInput>
-
-      <ArrayInput source="casosDeUso" label="Casos de Uso do Produto">
-        <SimpleFormIterator>
-          <TextInput source="titulo" label="Título" validate={required()} />
-          <TextInput source="descricao" label="Descrição" multiline validate={required()} />
-        </SimpleFormIterator>
-      </ArrayInput>
+      <ProdutoFormFields />
     </SimpleForm>
   </Create>
 );
