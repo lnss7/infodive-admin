@@ -12,6 +12,7 @@ import {
   required,
 } from 'react-admin';
 import { AdminHelpBanner } from './AdminHelpBanner';
+import { LucideIconPickerInput } from './LucideIconPicker';
 
 // ─── SOBRE NÚMEROS ───────────────────────────────────────────────────────────
 export const SobreNumerosEdit = () => (
@@ -84,7 +85,7 @@ export const SobreValoresEdit = () => (
       
       <ArrayInput source="valores" label="Lista de Valores">
         <SimpleFormIterator>
-          <TextInput source="icone" label="Ícone Lucide (Ex: shield, users)" />
+          <LucideIconPickerInput source="icone" label="Ícone do Valor" />
           <TextInput source="titulo" label="Título" validate={required()} />
           <TextInput source="descricao" label="Descrição" multiline validate={required()} fullWidth />
         </SimpleFormIterator>

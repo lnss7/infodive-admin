@@ -23,6 +23,7 @@ import {
   required,
 } from 'react-admin';
 import { AdminHelpAside } from './AdminHelpBanner';
+import { LucideIconPickerInput } from './LucideIconPicker';
 
 // ─── SOLUÇÕES ──────────────────────────────────────────────────────────────
 export const SolucaoList = () => (
@@ -68,7 +69,7 @@ const SolucaoFormFields = () => (
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <TextInput source="icone" label="Ícone Lucide (Ex: server, lock, cloud, shield)" helperText="Nome do ícone Lucide React sem prefixo" fullWidth />
+        <LucideIconPickerInput source="icone" label="Ícone da Solução" fullWidth />
         <ReferenceInput source="categoriaId" reference="categorias" label="Categoria Associada (Tag)">
           <SelectInput optionText="nome" validate={required()} fullWidth />
         </ReferenceInput>
@@ -290,7 +291,7 @@ export const ServicoEdit = () => (
       </p>
       <TextInput source="nome" validate={required()} label="Nome do Serviço" />
       <TextInput source="slug" validate={required()} label="Slug (Ex: sustentacao)" />
-      <TextInput source="icone" label="Ícone Lucide (Ex: wrench, headphones)" />
+      <LucideIconPickerInput source="icone" label="Ícone do Serviço" />
       <TextInput source="descricao" label="Descrição" multiline fullWidth />
       <NumberInput source="ordem" label="Ordem" />
       <BooleanInput source="ativo" label="Ativo" />
@@ -306,7 +307,7 @@ export const ServicoCreate = () => (
       </p>
       <TextInput source="nome" validate={required()} label="Nome do Serviço" />
       <TextInput source="slug" validate={required()} label="Slug" />
-      <TextInput source="icone" label="Ícone Lucide" />
+      <LucideIconPickerInput source="icone" label="Ícone do Serviço" />
       <TextInput source="descricao" label="Descrição" multiline fullWidth />
       <NumberInput source="ordem" defaultValue={1} label="Ordem" />
       <BooleanInput source="ativo" defaultValue={true} label="Ativo" />

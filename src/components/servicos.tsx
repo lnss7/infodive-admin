@@ -9,6 +9,7 @@ import {
   required,
 } from 'react-admin';
 import { AdminHelpBanner } from './AdminHelpBanner';
+import { LucideIconPickerInput } from './LucideIconPicker';
 
 // ─── SERVIÇOS ETAPAS ─────────────────────────────────────────────────────────
 export const ServicosEtapasEdit = () => (
@@ -26,7 +27,7 @@ export const ServicosEtapasEdit = () => (
         <SimpleFormIterator>
           <TextInput source="titulo" label="Título da Etapa" validate={required()} />
           <TextInput source="descricao" label="Descrição" multiline validate={required()} fullWidth />
-          <TextInput source="icone" label="Ícone Lucide (Ex: settings, shield)" />
+          <LucideIconPickerInput source="icone" label="Ícone da Etapa" />
           <NumberInput source="ordem" label="Ordem de Exibição" />
         </SimpleFormIterator>
       </ArrayInput>
@@ -57,7 +58,7 @@ export const ServicosMetodologiaEdit = () => (
 
       <ArrayInput source="pilares" label="Pilares Metodológicos">
         <SimpleFormIterator>
-          <TextInput source="icone" label="Ícone Lucide" />
+          <LucideIconPickerInput source="icone" label="Ícone do Pilar" />
           <TextInput source="titulo" label="Título do Pilar" validate={required()} />
           <TextInput source="descricao" label="Descrição" multiline validate={required()} fullWidth />
         </SimpleFormIterator>

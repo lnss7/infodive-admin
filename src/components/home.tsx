@@ -19,6 +19,7 @@ import {
   ListButton,
 } from 'react-admin';
 import { AdminHelpAside } from './AdminHelpBanner';
+import { LucideIconPickerInput } from './LucideIconPicker';
 
 // ─── HOME HERO CAROUSEL ──────────────────────────────────────────────────────
 export const HeroCarouselList = () => (
@@ -84,7 +85,7 @@ export const HomeSolucoesBentoEdit = () => (
     <SimpleForm toolbar={<BentoEditToolbar />}>
       <TextInput source="nome" validate={required()} label="Nome da Solução" />
       <TextInput source="descricao" label="Descrição" multiline fullWidth />
-      <TextInput source="icone" label="Ícone Lucide" />
+      <LucideIconPickerInput source="icone" label="Ícone" />
       <NumberInput source="ordem" label="Ordem" />
       <FormDataConsumer>
         {({ formData, ...rest }) => 
@@ -122,7 +123,7 @@ export const HomeSolucoesBentoCreate = () => (
     <SimpleForm>
       <TextInput source="nome" validate={required()} label="Nome da Solução" />
       <TextInput source="descricao" label="Descrição" multiline fullWidth />
-      <TextInput source="icone" label="Ícone Lucide" />
+      <LucideIconPickerInput source="icone" label="Ícone" />
       <NumberInput source="ordem" defaultValue={1} label="Ordem" />
       <FormDataConsumer>
         {({ formData, ...rest }) => 
@@ -175,7 +176,7 @@ export const HomeSegurancaMarqueeEdit = () => (
     <SimpleForm>
       <TextInput source="titulo" validate={required()} label="Título" />
       <TextInput source="corpo" label="Texto Principal" multiline fullWidth />
-      <TextInput source="icone" label="Ícone Lucide" />
+      <LucideIconPickerInput source="icone" label="Ícone" />
       <NumberInput source="ordem" label="Ordem" />
     </SimpleForm>
   </Edit>
@@ -186,7 +187,7 @@ export const HomeSegurancaMarqueeCreate = () => (
     <SimpleForm>
       <TextInput source="titulo" validate={required()} label="Título" />
       <TextInput source="corpo" label="Texto Principal" multiline fullWidth />
-      <TextInput source="icone" label="Ícone Lucide" />
+      <LucideIconPickerInput source="icone" label="Ícone" />
       <NumberInput source="ordem" defaultValue={1} label="Ordem" />
     </SimpleForm>
   </Create>
