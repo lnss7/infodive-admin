@@ -45,37 +45,107 @@ export const SolucaoList = () => (
   </List>
 );
 
-export const SolucaoEdit = () => (
-  <Edit title="Editar Solução">
-    <SimpleForm>
-      <TextInput source="nome" validate={required()} label="Nome" />
-      <TextInput source="slug" validate={required()} label="Slug (Ex: infraestrutura)" />
-      <TextInput source="icone" label="Ícone Lucide (Ex: server, lock)" />
-      
-      <ReferenceInput source="categoriaId" reference="categorias" label="Categoria Associada (Tag)">
-        <SelectInput optionText="nome" validate={required()} />
-      </ReferenceInput>
+const SolucaoFormFields = () => (
+  <div style={{ width: '100%' }}>
+    {/* PARTE 1 — CARD DA SOLUÇÃO */}
+    <div style={{
+      marginBottom: '2rem',
+      padding: '1.5rem',
+      backgroundColor: '#f8fafc',
+      borderRadius: '0.75rem',
+      border: '1px solid #e2e8f0'
+    }}>
+      <h3 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontSize: '1.05rem', fontWeight: 700 }}>
+        📌 PARTE 1 — CARD DA SOLUÇÃO (Exibido nas listagens de soluções)
+      </h3>
+      <p style={{ margin: '0 0 1.25rem 0', color: '#64748b', fontSize: '0.85rem' }}>
+        Defina os dados exibidos no Card da Solução na vitrine de soluções.
+      </p>
 
-      <TextInput source="subtituloCurto" label="Subtítulo Curto" fullWidth />
-      <TextInput source="descricaoCurta" label="Descrição Curta" multiline fullWidth />
-      <TextInput source="descricaoCompleta" label="Descrição Completa" multiline fullWidth />
-      <NumberInput source="ordem" label="Ordem" />
-      <BooleanInput source="ativo" label="Ativo" />
-      
-      <ImageInput source="imagemUrl" label="Imagem Representativa (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <TextInput source="nome" validate={required()} label="Título / Nome da Solução" fullWidth />
+        <TextInput source="slug" validate={required()} label="Slug URL (Ex: infraestrutura)" fullWidth />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <TextInput source="icone" label="Ícone Lucide (Ex: server, lock, cloud, shield)" helperText="Nome do ícone Lucide React sem prefixo" fullWidth />
+        <ReferenceInput source="categoriaId" reference="categorias" label="Categoria Associada (Tag)">
+          <SelectInput optionText="nome" validate={required()} fullWidth />
+        </ReferenceInput>
+      </div>
+
+      <TextInput source="subtituloCurto" label="Subtítulo Curto (Exibido no Card em azul)" fullWidth />
+      <TextInput source="descricaoCurta" label="Descrição Curta do Card" multiline fullWidth />
+
+      <div style={{ display: 'flex', gap: '2rem', marginTop: '0.5rem' }}>
+        <NumberInput source="ordem" defaultValue={1} label="Ordem de Exibição" />
+        <BooleanInput source="ativo" defaultValue={true} label="Ativo no Site?" />
+      </div>
+    </div>
+
+    {/* PARTE 2 — PÁGINA DETALHADA DA SOLUÇÃO */}
+    <div style={{
+      marginBottom: '1.5rem',
+      padding: '1.5rem',
+      backgroundColor: '#f1f5f9',
+      borderRadius: '0.75rem',
+      border: '1px solid #cbd5e1'
+    }}>
+      <h3 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontSize: '1.05rem', fontWeight: 700 }}>
+        📄 PARTE 2 — PÁGINA DETALHADA DA SOLUÇÃO (/solucoes/[slug])
+      </h3>
+      <p style={{ margin: '0 0 1.25rem 0', color: '#64748b', fontSize: '0.85rem' }}>
+        Conteúdo expandido exibido na página dedicada da Solução. <em>Nota: Título e Subtítulo da página são mantidos iguais aos definidos na Parte 1.</em>
+      </p>
+
+      <TextInput source="descricaoCompleta" label="Descrição Completa (Visão Geral / Overview da Solução)" multiline rows={4} fullWidth />
+
+      <ImageInput source="imagemUrl" label="Foto / Imagem Representativa da Solução (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
         <ImageField source="src" title="title" />
       </ImageInput>
 
-      <TextInput source="fabricantesTitulo" label="Título do Bloco de Parceiros" fullWidth />
-      <TextInput source="fabricantesDescricao" label="Descrição do Bloco de Parceiros" multiline fullWidth />
+      <div style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+        <h4 style={{ margin: '0 0 0.25rem 0', color: '#1e293b', fontSize: '0.95rem', fontWeight: 600 }}>
+          💡 Capacidades Técnicas & Recursos
+        </h4>
+        <p style={{ margin: '0 0 0.75rem 0', color: '#64748b', fontSize: '0.8rem' }}>
+          No Card da Solução, os títulos serão listados sob <strong>RECURSOS CHAVE</strong>. Na página detalhada, serão exibidos como cards em <strong>Capacidades Técnicas</strong> com a descrição completa.
+        </p>
 
-      <ArrayInput source="features" label="Recursos Principais">
-        <SimpleFormIterator>
-          <TextInput source="titulo" label="Título" validate={required()} />
-          <TextInput source="descricao" label="Descrição" multiline validate={required()} />
-          <TextInput source="tag" label="Tag (Ex: Hardware, Rede)" />
-        </SimpleFormIterator>
-      </ArrayInput>
+        <ArrayInput source="features" label="Recursos e Capacidades Técnicas">
+          <SimpleFormIterator>
+            <TextInput source="titulo" label="Título do Recurso" validate={required()} fullWidth />
+            <TextInput source="descricao" label="Descrição Detalhada do Recurso" multiline fullWidth />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </div>
+
+      <div style={{
+        marginTop: '1.5rem',
+        padding: '1.25rem',
+        backgroundColor: '#ffffff',
+        borderRadius: '0.5rem',
+        border: '1px solid #e2e8f0'
+      }}>
+        <h4 style={{ margin: '0 0 0.5rem 0', color: '#1e293b', fontSize: '0.95rem', fontWeight: 600 }}>
+          🤝 Bloco de Parcerias e Fabricantes Homologados
+        </h4>
+
+        <TextInput source="fabricantesTitulo" label="Título do Bloco (Ex: Parcerias e Fabricantes Homologados)" fullWidth />
+        <TextInput source="fabricantesDescricao" label="Descrição do Bloco de Parceiros" multiline fullWidth />
+
+        <ReferenceArrayInput source="fabricanteIds" reference="fabricantes" label="Fabricantes Homologados">
+          <SelectArrayInput optionText="nome" helperText="Selecione quais fabricantes cadastrados no sistema são parceiros homologados nesta solução." fullWidth />
+        </ReferenceArrayInput>
+      </div>
+    </div>
+  </div>
+);
+
+export const SolucaoEdit = () => (
+  <Edit title="Editar Solução">
+    <SimpleForm>
+      <SolucaoFormFields />
     </SimpleForm>
   </Edit>
 );
@@ -83,34 +153,7 @@ export const SolucaoEdit = () => (
 export const SolucaoCreate = () => (
   <Create title="Criar Solução">
     <SimpleForm>
-      <TextInput source="nome" validate={required()} label="Nome" />
-      <TextInput source="slug" validate={required()} label="Slug" />
-      <TextInput source="icone" label="Ícone Lucide" />
-
-      <ReferenceInput source="categoriaId" reference="categorias" label="Categoria Associada (Tag)">
-        <SelectInput optionText="nome" validate={required()} />
-      </ReferenceInput>
-
-      <TextInput source="subtituloCurto" label="Subtítulo Curto" fullWidth />
-      <TextInput source="descricaoCurta" label="Descrição Curta" multiline fullWidth />
-      <TextInput source="descricaoCompleta" label="Descrição Completa" multiline fullWidth />
-      <NumberInput source="ordem" defaultValue={1} label="Ordem" />
-      <BooleanInput source="ativo" defaultValue={true} label="Ativo" />
-      
-      <ImageInput source="imagemUrl" label="Imagem Representativa (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
-        <ImageField source="src" title="title" />
-      </ImageInput>
-
-      <TextInput source="fabricantesTitulo" label="Título do Bloco de Parceiros" fullWidth />
-      <TextInput source="fabricantesDescricao" label="Descrição do Bloco de Parceiros" multiline fullWidth />
-
-      <ArrayInput source="features" label="Recursos Principais">
-        <SimpleFormIterator>
-          <TextInput source="titulo" label="Título" validate={required()} />
-          <TextInput source="descricao" label="Descrição" multiline validate={required()} />
-          <TextInput source="tag" label="Tag" />
-        </SimpleFormIterator>
-      </ArrayInput>
+      <SolucaoFormFields />
     </SimpleForm>
   </Create>
 );
