@@ -167,12 +167,14 @@ function toPascalCase(str: string): string {
 
 /**
  * Tries to resolve a Lucide icon component by its kebab-case name.
+ * Lucide React icons are ForwardRef components (objects with $$typeof), not plain functions.
  */
 function getLucideIcon(name: string): React.ComponentType<{ size?: number; strokeWidth?: number }> | null {
   if (!name) return null;
   const pascalName = toPascalCase(name);
-  const icon = (LucideIcons as Record<string, unknown>)[pascalName];
-  if (typeof icon === 'function') {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const icon = (LucideIcons as Record<string, any>)[pascalName];
+  if (icon && (typeof icon === 'function' || (typeof icon === 'object' && icon.$$typeof))) {
     return icon as React.ComponentType<{ size?: number; strokeWidth?: number }>;
   }
   return null;
