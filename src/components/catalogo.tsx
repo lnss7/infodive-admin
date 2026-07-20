@@ -219,7 +219,7 @@ export const FabricanteList = () => (
   <List sort={{ field: 'ordem', order: 'ASC' }} perPage={50} aside={
     <AdminHelpAside
       title="Onde estes Fabricantes são exibidos?"
-      description={<>Parceiros tecnológicos globais (ex: <em>IBM, Red Hat, Veeam</em>).<br /><br />Exibidos na barra de logos de parceiros na <strong>Home</strong> e vinculados aos produtos cadastrados.</>}
+      description={<>Parceiros tecnológicos globais (ex: <em>IBM, Red Hat, Veeam</em>).<br /><br />• <strong>Destaque Ativo (Sim)</strong>: Exibe o fabricante na lista do menu dropdown de <strong>Produtos na Navbar</strong>.<br /><br />• <strong>Todos os fabricantes ativos</strong> aparecem na barra de logos (Marquee) da página <code>/produtos</code> e vinculados aos produtos do catálogo.</>}
     />
   }>
     <Datagrid rowClick="edit">
