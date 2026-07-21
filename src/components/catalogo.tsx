@@ -106,7 +106,7 @@ const SolucaoFormFields = () => (
       </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <TextInput source="nome" validate={required()} label="Título / Nome da Solução" fullWidth />
+        <TextInput source="titulo" validate={required()} label="Título / Nome da Solução" fullWidth />
         <TextInput source="slug" validate={required()} label="Slug URL (Ex: infraestrutura)" fullWidth />
       </div>
 
