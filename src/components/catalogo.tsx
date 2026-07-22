@@ -54,13 +54,12 @@ const validateFabricanteDestaque = async (values: any) => {
   if (values.destaque) {
     try {
       const res = await dataProvider.getList('fabricantes', {
-        filter: { destaque: true },
         pagination: { page: 1, perPage: 100 },
         sort: { field: 'id', order: 'ASC' }
       });
-      const existingDestaques = res.data.filter((item: any) => item.id !== values.id);
+      const existingDestaques = res.data.filter((item: any) => Boolean(item.destaque) && item.id !== values.id);
       if (existingDestaques.length >= 6) {
-        errors.destaque = 'Limite atingido! Já existem 6 fabricantes marcados como destaque. Desmarque outro fabricante antes de destacar este.';
+        errors.destaque = 'Limite atingido! Já existem 6 fabricantes marcados como destaque na Navbar. Desmarque outro fabricante antes de destacar este.';
       }
     } catch {}
   }
