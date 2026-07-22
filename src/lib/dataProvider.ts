@@ -60,11 +60,17 @@ const checkAndUploadFiles = async (data: any): Promise<any> => {
                 console.error(`Erro ao fazer upload da imagem no campo ${key}:`, err);
                 throw err;
             }
+        } else if (val && typeof val === 'object' && 'src' in val && typeof (val as any).src === 'string') {
+            // Se for objeto do ImageInput sem arquivo novo (apenas visualizacao), extrai a string da URL
+            processedData[key] = (val as any).src;
         } else if (Array.isArray(val)) {
             const uploadedArray = await Promise.all(
                 val.map(async (item) => {
                     if (item && typeof item === 'object' && (item as any).rawFile instanceof File) {
                         return await uploadFile((item as any).rawFile);
+                    }
+                    if (item && typeof item === 'object' && 'src' in item && typeof (item as any).src === 'string') {
+                        return (item as any).src;
                     }
                     return await checkAndUploadFiles(item);
                 })
