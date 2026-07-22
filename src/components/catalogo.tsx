@@ -154,7 +154,12 @@ const SolucaoFormFields = () => (
 
       <TextInput source="descricaoCompleta" label="Descrição Completa (Visão Geral / Overview da Solução)" multiline rows={4} fullWidth />
 
-      <ImageInput source="imagemUrl" label="Foto / Imagem Representativa da Solução (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
+      <ImageInput 
+        source="imagemUrl" 
+        label="Foto / Imagem Representativa da Solução (Recomendado: 1200x675px - 16:9)" 
+        helperText="Tamanho recomendado: 1200x675px (Proporção 16:9) ou 1200x800px (Proporção 3:2). Formatos aceitos: WEBP ou PNG. Máximo: 1MB."
+        accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}
+      >
         <ImageField source="src" title="title" />
       </ImageInput>
 
@@ -281,7 +286,12 @@ export const FabricanteEdit = () => (
       <BooleanInput source="destaque" label="Parceiro Destaque?" />
       <BooleanInput source="ativo" label="Ativo" />
       
-      <ImageInput source="logoUrl" label="Logo do Fabricante (SVG, PNG)" accept={{ 'image/svg+xml': ['.svg'], 'image/png': ['.png'] }}>
+      <ImageInput 
+        source="logoUrl" 
+        label="Logo do Fabricante (Recomendado: 400x160px - Fundo Transparente SVG/PNG)" 
+        helperText="Tamanho recomendado: 400x160px (Fundo transparente SVG ou PNG). Formato preferencialmente horizontal com bom contraste."
+        accept={{ 'image/svg+xml': ['.svg'], 'image/png': ['.png'] }}
+      >
         <ImageField source="src" title="title" />
       </ImageInput>
     </SimpleForm>
@@ -300,7 +310,12 @@ export const FabricanteCreate = () => (
       <BooleanInput source="destaque" defaultValue={false} label="Parceiro Destaque?" />
       <BooleanInput source="ativo" defaultValue={true} label="Ativo" />
       
-      <ImageInput source="logoUrl" label="Logo do Fabricante (SVG, PNG)" accept={{ 'image/svg+xml': ['.svg'], 'image/png': ['.png'] }}>
+      <ImageInput 
+        source="logoUrl" 
+        label="Logo do Fabricante (Recomendado: 400x160px - Fundo Transparente SVG/PNG)" 
+        helperText="Tamanho recomendado: 400x160px (Fundo transparente SVG ou PNG). Formato preferencialmente horizontal com bom contraste."
+        accept={{ 'image/svg+xml': ['.svg'], 'image/png': ['.png'] }}
+      >
         <ImageField source="src" title="title" />
       </ImageInput>
     </SimpleForm>
@@ -371,6 +386,7 @@ export const ProdutoList = () => (
       <TextField source="fabricanteNome" label="Fabricante" />
       <TextField source="categoriaTitle" label="Categoria" />
       <BooleanField source="destaque" label="Destaque" />
+      <BooleanField source="novidade" label="Novidade" />
       <BooleanField source="ativo" label="Ativo" />
     </Datagrid>
   </List>
@@ -418,8 +434,9 @@ const ProdutoFormFields = () => (
 
       <TextInput source="descricaoCurta" label="Descrição Curta / Resumo do Hero" multiline rows={2} fullWidth helperText="Exibida em destaque no topo da página do produto e nos cards de produtos relacionados." />
 
-      <div style={{ display: 'flex', gap: '2rem', marginTop: '0.5rem' }}>
+      <div style={{ display: 'flex', gap: '2rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
         <BooleanInput source="destaque" defaultValue={false} label="Destaque no Catálogo?" />
+        <BooleanInput source="novidade" defaultValue={false} label="⭐ Produto Novidade (Card Preto Navbar)?" helperText="Apenas 1 por vez. Se ativado, substituirá a novidade anterior no card da Navbar." />
         <BooleanInput source="ativo" defaultValue={true} label="Ativo no Site?" />
       </div>
     </div>
@@ -441,7 +458,12 @@ const ProdutoFormFields = () => (
 
       <TextInput source="descricaoCompleta" label="Aba 1: Visão Geral / Descrição Completa" multiline rows={4} fullWidth helperText="Texto detalhado da 1ª aba da página do produto." />
 
-      <ImageInput source="imagemUrl" label="Foto / Imagem Representativa do Produto (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
+      <ImageInput 
+        source="imagemUrl" 
+        label="Foto / Imagem Representativa do Produto (Recomendado: 1200x800px - 3:2)" 
+        helperText="Tamanho recomendado: 1200x800px (Proporção 3:2) ou 1200x675px (Proporção 16:9). Formatos aceitos: WEBP ou PNG. Máximo: 1MB."
+        accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}
+      >
         <ImageField source="src" title="title" />
       </ImageInput>
 

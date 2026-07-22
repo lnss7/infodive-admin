@@ -43,7 +43,12 @@ export const HeroCarouselEdit = () => (
   <Edit title="Editar Banner do Carrossel">
     <SimpleForm>
       <NumberInput source="ordem" validate={required()} label="Ordem" />
-      <ImageInput source="imagemUrl" label="Imagem do Banner (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
+      <ImageInput 
+        source="imagemUrl" 
+        label="Imagem do Banner Hero (Recomendado: 1920x1080px - 16:9)" 
+        helperText="Tamanho recomendado: 1920x1080px (Proporção 16:9 widescreen). Formatos aceitos: PNG ou WEBP. Máximo: 2MB."
+        accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}
+      >
         <ImageField source="src" title="title" />
       </ImageInput>
     </SimpleForm>
@@ -54,7 +59,12 @@ export const HeroCarouselCreate = () => (
   <Create title="Adicionar Banner ao Carrossel">
     <SimpleForm>
       <NumberInput source="ordem" validate={required()} defaultValue={1} label="Ordem" />
-      <ImageInput source="imagemUrl" label="Imagem do Banner (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
+      <ImageInput 
+        source="imagemUrl" 
+        label="Imagem do Banner Hero (Recomendado: 1920x1080px - 16:9)" 
+        helperText="Tamanho recomendado: 1920x1080px (Proporção 16:9 widescreen). Formatos aceitos: PNG ou WEBP. Máximo: 2MB."
+        accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}
+      >
         <ImageField source="src" title="title" />
       </ImageInput>
     </SimpleForm>
@@ -114,7 +124,8 @@ export const HomeSolucoesBentoEdit = () => (
           Number(formData.ordem) === 3 ? (
             <ImageInput 
               source="imagemIaUrl" 
-              label="Ilustração IA (PNG, WEBP)" 
+              label="Ilustração IA (Recomendado: 800x600px - PNG/WEBP Transparente)" 
+              helperText="Tamanho recomendado: 800x600px (ou 600x600px). Formatos aceitos: PNG transparente ou WEBP. Máximo: 1MB."
               accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}
               {...rest}
             >
@@ -155,7 +166,8 @@ export const HomeSolucoesBentoCreate = () => (
           Number(formData.ordem) === 3 ? (
             <ImageInput 
               source="imagemIaUrl" 
-              label="Ilustração IA (PNG, WEBP)" 
+              label="Ilustração IA (Recomendado: 800x600px - PNG/WEBP Transparente)" 
+              helperText="Tamanho recomendado: 800x600px (ou 600x600px). Formatos aceitos: PNG transparente ou WEBP. Máximo: 1MB."
               accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}
               {...rest}
             >

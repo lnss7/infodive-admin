@@ -98,7 +98,12 @@ export const ConteudoEdit = () => (
       <BooleanInput source="destaque" label="Destaque na Página Inicial (Home)" defaultValue={false} />
       <BooleanInput source="ativo" label="Ativo" />
 
-      <ImageInput source="imagemUrl" label="Imagem de Banner (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
+      <ImageInput 
+        source="imagemUrl" 
+        label="Imagem do Banner do Artigo (Recomendado: 1200x675px - 16:9)" 
+        helperText="Tamanho recomendado: 1200x675px (Proporção 16:9 Widescreen). Formatos aceitos: WEBP ou PNG. Máximo: 1MB."
+        accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}
+      >
         <ImageField source="src" title="title" />
       </ImageInput>
     </SimpleForm>
@@ -165,7 +170,12 @@ export const ConteudoCreate = () => (
       <BooleanInput source="destaque" label="Destaque na Página Inicial (Home)" defaultValue={false} />
       <BooleanInput source="ativo" defaultValue={true} label="Ativo" />
 
-      <ImageInput source="imagemUrl" label="Imagem de Banner (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}>
+      <ImageInput 
+        source="imagemUrl" 
+        label="Imagem do Banner do Artigo (Recomendado: 1200x675px - 16:9)" 
+        helperText="Tamanho recomendado: 1200x675px (Proporção 16:9 Widescreen). Formatos aceitos: WEBP ou PNG. Máximo: 1MB."
+        accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }}
+      >
         <ImageField source="src" title="title" />
       </ImageInput>
     </SimpleForm>
@@ -212,7 +222,12 @@ export const CaseEdit = () => (
       <TextInput source="cargo" label="Cargo do Autor" />
 
       {/* ─── Imagem ─── */}
-      <ImageInput source="imagemUrl" label="Imagem Representativa (PNG, WEBP, SVG)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'], 'image/svg+xml': ['.svg'] }}>
+      <ImageInput 
+        source="imagemUrl" 
+        label="Banner Vertical do Case (Recomendado: 800x1000px - 4:5 Vertical)" 
+        helperText="Tamanho recomendado: 800x1000px (Proporção Vertical 4:5) ou 600x750px. Formatos aceitos: WEBP, PNG ou JPG. Máximo: 2MB."
+        accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'], 'image/jpeg': ['.jpg', '.jpeg'], 'image/svg+xml': ['.svg'] }}
+      >
         <ImageField source="src" title="title" />
       </ImageInput>
     </SimpleForm>
@@ -240,7 +255,12 @@ export const CaseCreate = () => (
       <TextInput source="cargo" label="Cargo do Autor" />
 
       {/* ─── Imagem ─── */}
-      <ImageInput source="imagemUrl" label="Imagem Representativa (PNG, WEBP, SVG)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'], 'image/svg+xml': ['.svg'] }}>
+      <ImageInput 
+        source="imagemUrl" 
+        label="Banner Vertical do Case (Recomendado: 800x1000px - 4:5 Vertical)" 
+        helperText="Tamanho recomendado: 800x1000px (Proporção Vertical 4:5) ou 600x750px. Formatos aceitos: WEBP, PNG ou JPG. Máximo: 2MB."
+        accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'], 'image/jpeg': ['.jpg', '.jpeg'], 'image/svg+xml': ['.svg'] }}
+      >
         <ImageField source="src" title="title" />
       </ImageInput>
     </SimpleForm>

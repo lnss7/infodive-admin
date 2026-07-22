@@ -108,7 +108,13 @@ export const SobreCulturaEdit = () => (
       
       <ArrayInput source="fotos" label="Fotos da Galeria de Cultura">
         <SimpleFormIterator>
-          <ImageInput source="imagemUrl" label="Carregar Foto (PNG, WEBP)" accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }} validate={required()}>
+          <ImageInput 
+            source="imagemUrl" 
+            label="Foto da Cultura (Recomendado: 800x600px - 4:3)" 
+            helperText="Tamanho recomendado: 800x600px (Proporção 4:3) ou 1200x800px (3:2). Formatos aceitos: WEBP ou PNG/JPG. Máximo: 1MB."
+            accept={{ 'image/png': ['.png'], 'image/webp': ['.webp'] }} 
+            validate={required()}
+          >
             <ImageField source="src" title="title" />
           </ImageInput>
           <TextInput source="alt" label="Texto Alternativo (Alt - Acessibilidade)" />
