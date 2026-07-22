@@ -16,7 +16,7 @@ import { LucideIconPickerInput } from './LucideIconPicker';
 
 // ─── SOBRE NÚMEROS ───────────────────────────────────────────────────────────
 export const SobreNumerosEdit = () => (
-  <Edit title="Sobre - Números e Métricas" id="singleton">
+  <Edit title="Sobre - Números e Métricas" id="singleton" mutationMode="pessimistic">
     <SimpleForm>
       <AdminHelpBanner
         title="O que esta tela altera no site?"
@@ -49,7 +49,7 @@ export const SobreNumerosEdit = () => (
 
 // ─── SOBRE TIMELINE ──────────────────────────────────────────────────────────
 export const SobreTimelineEdit = () => (
-  <Edit title="Sobre - Linha do Tempo (História)" id="singleton">
+  <Edit title="Sobre - Linha do Tempo (História)" id="singleton" mutationMode="pessimistic">
     <SimpleForm>
       <AdminHelpBanner
         title="O que esta tela altera no site?"
@@ -73,7 +73,7 @@ export const SobreTimelineEdit = () => (
 
 // ─── SOBRE VALORES ───────────────────────────────────────────────────────────
 export const SobreValoresEdit = () => (
-  <Edit title="Sobre - Missão, Visão e Valores" id="singleton">
+  <Edit title="Sobre - Missão, Visão e Valores" id="singleton" mutationMode="pessimistic">
     <SimpleForm>
       <AdminHelpBanner
         title="O que esta tela altera no site?"
@@ -96,7 +96,7 @@ export const SobreValoresEdit = () => (
 
 // ─── SOBRE CULTURA ───────────────────────────────────────────────────────────
 export const SobreCulturaEdit = () => (
-  <Edit title="Sobre - Cultura Organizacional" id="singleton">
+  <Edit title="Sobre - Cultura Organizacional" id="singleton" mutationMode="pessimistic">
     <SimpleForm>
       <AdminHelpBanner
         title="O que esta tela altera no site?"

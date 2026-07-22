@@ -41,7 +41,7 @@ export const ConteudoList = () => (
 );
 
 export const ConteudoEdit = () => (
-  <Edit title="Editar Conteúdo">
+  <Edit title="Editar Conteúdo" mutationMode="pessimistic">
     <SimpleForm>
       <TextInput source="titulo" validate={required()} label="Título" fullWidth />
       <TextInput source="slug" validate={required()} label="Slug" />
@@ -202,7 +202,7 @@ export const CaseList = () => (
 );
 
 export const CaseEdit = () => (
-  <Edit title="Editar Case de Sucesso">
+  <Edit title="Editar Case de Sucesso" mutationMode="pessimistic">
     <SimpleForm>
       {/* ─── Identificação ─── */}
       <TextInput source="cliente" validate={required()} label="Nome do Cliente" />

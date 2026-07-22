@@ -202,7 +202,7 @@ const SolucaoFormFields = () => (
 );
 
 export const SolucaoEdit = () => (
-  <Edit title="Editar Solução">
+  <Edit title="Editar Solução" mutationMode="pessimistic">
     <SimpleForm>
       <SolucaoFormFields />
     </SimpleForm>
@@ -235,7 +235,7 @@ export const CategoriaList = () => (
 );
 
 export const CategoriaEdit = () => (
-  <Edit title="Editar Categoria">
+  <Edit title="Editar Categoria" mutationMode="pessimistic">
     <SimpleForm>
       <TextInput source="nome" validate={required()} label="Nome" />
       <TextInput source="slug" validate={required()} label="Slug" disabled />
@@ -275,7 +275,7 @@ export const FabricanteList = () => (
 );
 
 export const FabricanteEdit = () => (
-  <Edit title="Editar Fabricante">
+  <Edit title="Editar Fabricante" mutationMode="pessimistic">
     <SimpleForm validate={validateFabricanteDestaque}>
       <TextInput source="nome" validate={required()} label="Nome" />
       <TextInput source="slug" validate={required()} label="Slug (Ex: ibm)" />
@@ -523,7 +523,7 @@ const ProdutoFormFields = () => (
 );
 
 export const ProdutoEdit = () => (
-  <Edit title="Editar Produto">
+  <Edit title="Editar Produto" mutationMode="pessimistic">
     <SimpleForm validate={validateProdutoDestaque}>
       <ProdutoFormFields />
     </SimpleForm>

@@ -40,7 +40,7 @@ export const HeroCarouselList = () => (
 );
 
 export const HeroCarouselEdit = () => (
-  <Edit title="Editar Banner do Carrossel">
+  <Edit title="Editar Banner do Carrossel" mutationMode="pessimistic">
     <SimpleForm>
       <NumberInput source="ordem" validate={required()} label="Ordem" />
       <ImageInput 
@@ -97,7 +97,7 @@ const BentoEditToolbar = (props: any) => (
 );
 
 export const HomeSolucoesBentoEdit = () => (
-  <Edit title="Editar Item do Bento Grid">
+  <Edit title="Editar Item do Bento Grid" mutationMode="pessimistic">
     <SimpleForm toolbar={<BentoEditToolbar />}>
       <TextInput source="nome" validate={required()} label="Nome da Solução" />
       <TextInput source="descricao" label="Descrição" multiline fullWidth />
