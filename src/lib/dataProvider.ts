@@ -1,6 +1,6 @@
 import { DataProvider, fetchUtils } from 'react-admin';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://infodiveit-backend-production.up.railway.app/api/v1';
 
 const httpClient = (url: string, options: any = {}) => {
     if (!options.headers) {
