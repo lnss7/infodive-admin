@@ -6,7 +6,7 @@ export const authOptions: NextAuthOptions = {
     AzureADProvider({
       clientId: process.env.AZURE_CLIENT_ID || "",
       clientSecret: process.env.AZURE_CLIENT_SECRET || "",
-      tenantId: process.env.AZURE_TENANT_ID || "",
+      tenantId: process.env.AZURE_TENANT_ID_TYPE || "common",
       authorization: {
         params: {
           scope: "openid profile email User.Read",
