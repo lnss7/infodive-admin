@@ -11,6 +11,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { dataProvider } from '@/lib/dataProvider';
 import { authProvider } from '@/lib/authProvider';
+import CustomLoginPage from '@/components/LoginPage';
 
 // Custom Premium light theme
 const myLightTheme = createTheme({
@@ -524,6 +525,7 @@ export default function AdminApp() {
     <Admin
       dataProvider={dataProvider}
       authProvider={authProvider}
+      loginPage={CustomLoginPage}
       title="Infodive IT — Painel Administrativo"
       theme={myLightTheme}
       darkTheme={myDarkTheme}

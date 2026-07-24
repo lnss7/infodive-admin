@@ -1,14 +1,19 @@
 import { AuthProvider } from 'react-admin';
+import { signOut } from 'next-auth/react';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1';
 
 export const authProvider: AuthProvider = {
     login: async ({ username }) => {
-        let email = (username || '').trim();
-        if (email && !email.includes('@') && !email.startsWith('mock:')) {
-            email = `${email}@infodive.com.br`;
+        let idToken = (username || '').trim();
+        
+        // Se for apenas o e-mail (sem ser um JWT ey... nem ter o prefixo mock:), formata como mock
+        if (!idToken.startsWith('ey') && !idToken.startsWith('mock:')) {
+            if (idToken && !idToken.includes('@')) {
+                idToken = `${idToken}@infodive.com.br`;
+            }
+            idToken = `mock:${idToken}`;
         }
-        const idToken = email.startsWith('mock:') ? email : `mock:${email}`;
 
         const response = await fetch(`${apiUrl}/auth/login`, {
             method: 'POST',
@@ -31,21 +36,26 @@ export const authProvider: AuthProvider = {
         const data = await response.json();
         if (data.token) {
             localStorage.setItem('token', data.token);
-            localStorage.setItem('username', username);
+            localStorage.setItem('username', data.email || username);
             return Promise.resolve();
         }
 
         throw new Error('Token não retornado pelo servidor');
     },
     
-    logout: () => {
+    logout: async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
+        try {
+            await signOut({ redirect: false });
+        } catch {
+            // Ignora se não houver sessão ativa do NextAuth
+        }
         return Promise.resolve();
     },
     
     checkError: (error) => {
-        const status = error.status;
+        const status = error?.status;
         if (status === 401 || status === 403) {
             localStorage.removeItem('token');
             localStorage.removeItem('username');
