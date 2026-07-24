@@ -47,8 +47,10 @@ export const authProvider: AuthProvider = {
     },
     
     checkError: (error) => {
+        console.error('[AUTH ERROR] React Admin checkError capturou falha:', error);
         const status = error?.status;
         if (status === 401 || status === 403) {
+            console.warn('[AUTH LOGOUT] Status 401/403 recebido do backend. Deslogando...');
             localStorage.removeItem('token');
             localStorage.removeItem('username');
             return Promise.reject();
@@ -57,7 +59,11 @@ export const authProvider: AuthProvider = {
     },
     
     checkAuth: () => {
-        return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
+        const hasToken = !!localStorage.getItem('token');
+        if (!hasToken) {
+            console.warn('[AUTH] Nenhum token encontrado em localStorage.');
+        }
+        return hasToken ? Promise.resolve() : Promise.reject();
     },
     
     getPermissions: () => Promise.resolve(),
