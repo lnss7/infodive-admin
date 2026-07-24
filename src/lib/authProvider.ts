@@ -1,5 +1,5 @@
 import { AuthProvider } from 'react-admin';
-import { signOut } from 'next-auth/react';
+import { signOut, getSession } from 'next-auth/react';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1';
 
@@ -58,12 +58,42 @@ export const authProvider: AuthProvider = {
         return Promise.resolve();
     },
     
-    checkAuth: () => {
-        const hasToken = !!localStorage.getItem('token');
-        if (!hasToken) {
-            console.warn('[AUTH] Nenhum token encontrado em localStorage.');
+    checkAuth: async () => {
+        // 1. Se o token já existe no localStorage, o acesso está autorizado!
+        if (localStorage.getItem('token')) {
+            return Promise.resolve();
         }
-        return hasToken ? Promise.resolve() : Promise.reject();
+
+        // 2. Se o token ainda não está no localStorage, mas existe uma sessão da Microsoft (NextAuth)
+        try {
+            const session = await getSession();
+            if (session) {
+                const idToken = (session as any).idToken;
+                const email = session.user?.email;
+
+                if (idToken || email) {
+                    const response = await fetch(`${apiUrl}/auth/login`, {
+                        method: 'POST',
+                        body: JSON.stringify({ idToken: idToken || email }),
+                        headers: new Headers({ 'Content-Type': 'application/json' }),
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.token) {
+                            localStorage.setItem('token', data.token);
+                            localStorage.setItem('username', data.email || 'Administrador');
+                            return Promise.resolve();
+                        }
+                    }
+                }
+            }
+        } catch (err) {
+            console.error('[AUTH checkAuth] Erro ao sincronizar sessão NextAuth:', err);
+        }
+
+        console.warn('[AUTH checkAuth] Nenhum token em localStorage nem sessão Microsoft ativa.');
+        return Promise.reject();
     },
     
     getPermissions: () => Promise.resolve(),
