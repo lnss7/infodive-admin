@@ -12,6 +12,8 @@ import ListItemText from '@mui/material/ListItemText';
 import { dataProvider } from '@/lib/dataProvider';
 import { authProvider } from '@/lib/authProvider';
 import CustomLoginPage from '@/components/LoginPage';
+import HistoryIcon from '@mui/icons-material/History';
+import { LogAuditoriaList } from './auditoria';
 
 // Custom Premium light theme
 const myLightTheme = createTheme({
@@ -505,6 +507,7 @@ const MyMenu = () => {
       <Collapse in={openGroups.admins} timeout="auto" unmountOnExit>
         <List component="div" disablePadding sx={{ pl: 1 }}>
           <Menu.Item to="/leads" primaryText="Leads Recebidos" leftIcon={<PeopleIcon />} />
+          <Menu.Item to="/logs-auditoria" primaryText="Logs de Auditoria" leftIcon={<HistoryIcon />} />
         </List>
       </Collapse>
     </Menu>
@@ -733,7 +736,13 @@ export default function AdminApp() {
         icon={PeopleIcon}
       />
 
-      {/* ─── 9. LEADS & AUDITORIA ───────────────────────────────────────────── */}
+      {/* ─── 9. LOGS DE AUDITORIA ───────────────────────────────────────────── */}
+      <Resource
+        name="logs-auditoria"
+        options={{ label: 'Logs de Auditoria' }}
+        list={LogAuditoriaList}
+        icon={HistoryIcon}
+      />
     </Admin>
   );
 }
