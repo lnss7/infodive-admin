@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLogin, useNotify } from "react-admin";
 import { signIn, useSession } from "next-auth/react";
 
@@ -11,19 +11,22 @@ export default function CustomLoginPage() {
   const [loading, setLoading] = useState(false);
   const [mockEmail, setMockEmail] = useState("");
   const [showMock, setShowMock] = useState(false);
+  const attemptMade = useRef(false);
 
   // Se houver uma sessão ativa do NextAuth (após o callback da Microsoft), sincroniza com o backend
   useEffect(() => {
-    if (status === "authenticated" && session) {
+    if (status === "authenticated" && session && !attemptMade.current) {
       const idToken = (session as any).idToken;
       const email = session.user?.email;
 
       if (idToken || email) {
+        attemptMade.current = true;
         setLoading(true);
-        // Tenta realizar o login no authProvider repassando o idToken do Entra ID ou email
+        // Tenta realizar o login no authProvider repassando o idToken do Entra ID ou e-mail
         login({ username: idToken || `mock:${email}` })
           .catch((error) => {
-            notify(error?.message || "Falha na autorização do Microsoft Entra ID", { type: "error" });
+            const errorMsg = error?.message || "Falha na autorização do Microsoft Entra ID";
+            notify(errorMsg, { type: "error" });
             setLoading(false);
           });
       }
@@ -31,6 +34,7 @@ export default function CustomLoginPage() {
   }, [status, session, login, notify]);
 
   const handleMicrosoftLogin = () => {
+    attemptMade.current = false;
     setLoading(true);
     signIn("azure-ad", { callbackUrl: "/" });
   };
@@ -71,7 +75,10 @@ export default function CustomLoginPage() {
             className="w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3.5 px-5 rounded-2xl shadow-lg transition-all duration-200 transform active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200"
           >
             {loading ? (
-              <div className="h-5 w-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
+              <div className="flex items-center gap-2">
+                <div className="h-5 w-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
+                <span>Autenticando...</span>
+              </div>
             ) : (
               <>
                 {/* Microsoft Logo SVG */}
