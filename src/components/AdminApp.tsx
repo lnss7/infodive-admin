@@ -505,7 +505,6 @@ const MyMenu = () => {
       <Collapse in={openGroups.admins} timeout="auto" unmountOnExit>
         <List component="div" disablePadding sx={{ pl: 1 }}>
           <Menu.Item to="/leads" primaryText="Leads Recebidos" leftIcon={<PeopleIcon />} />
-          <Menu.Item to="/admins-autorizados" primaryText="Allowlist Admins" leftIcon={<SupervisorAccountIcon />} />
         </List>
       </Collapse>
     </Menu>
@@ -734,15 +733,7 @@ export default function AdminApp() {
         icon={PeopleIcon}
       />
 
-      {/* ─── 9. ADMINS ──────────────────────────────────────────────────────── */}
-      <Resource
-        name="admins-autorizados"
-        options={{ label: 'Allowlist Admins' }}
-        list={AdminAutorizadoList}
-        edit={AdminAutorizadoEdit}
-        create={AdminAutorizadoCreate}
-        icon={SupervisorAccountIcon}
-      />
+      {/* ─── 9. LEADS & AUDITORIA ───────────────────────────────────────────── */}
     </Admin>
   );
 }
