@@ -5,15 +5,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1'
 
 export const authProvider: AuthProvider = {
     login: async ({ username }) => {
-        let idToken = (username || '').trim();
-        
-        // Se for apenas o e-mail (sem ser um JWT ey... nem ter o prefixo mock:), formata como mock
-        if (!idToken.startsWith('ey') && !idToken.startsWith('mock:')) {
-            if (idToken && !idToken.includes('@')) {
-                idToken = `${idToken}@infodive.com.br`;
-            }
-            idToken = `mock:${idToken}`;
-        }
+        const idToken = (username || '').trim();
 
         const response = await fetch(`${apiUrl}/auth/login`, {
             method: 'POST',
@@ -23,7 +15,7 @@ export const authProvider: AuthProvider = {
 
         if (!response.ok) {
             const errorText = await response.text();
-            let parsedMessage = 'Falha na autenticação';
+            let parsedMessage = 'Falha na autenticação com a Microsoft';
             try {
                 const errorJson = JSON.parse(errorText);
                 parsedMessage = errorJson.message || errorJson.error || parsedMessage;
@@ -36,7 +28,7 @@ export const authProvider: AuthProvider = {
         const data = await response.json();
         if (data.token) {
             localStorage.setItem('token', data.token);
-            localStorage.setItem('username', data.email || username);
+            localStorage.setItem('username', data.email || 'Administrador');
             return Promise.resolve();
         }
 

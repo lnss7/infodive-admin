@@ -9,11 +9,9 @@ export default function CustomLoginPage() {
   const notify = useNotify();
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
-  const [mockEmail, setMockEmail] = useState("");
-  const [showMock, setShowMock] = useState(false);
   const attemptMade = useRef(false);
 
-  // Se houver uma sessão ativa do NextAuth (após o callback da Microsoft), sincroniza com o backend
+  // Quando o usuário é autenticado com sucesso pelo Microsoft Entra ID via NextAuth
   useEffect(() => {
     if (status === "authenticated" && session && !attemptMade.current) {
       const idToken = (session as any).idToken;
@@ -22,10 +20,13 @@ export default function CustomLoginPage() {
       if (idToken || email) {
         attemptMade.current = true;
         setLoading(true);
-        // Tenta realizar o login no authProvider repassando o idToken do Entra ID ou e-mail
-        login({ username: idToken || `mock:${email}` })
+        // Valida o token Microsoft real no backend Spring Boot
+        login({ username: idToken || email })
+          .then(() => {
+            window.location.href = "/";
+          })
           .catch((error) => {
-            const errorMsg = error?.message || "Falha na autorização do Microsoft Entra ID";
+            const errorMsg = error?.message || "Acesso negado. Apenas e-mails corporativos @infodive.com.br são autorizados.";
             notify(errorMsg, { type: "error" });
             setLoading(false);
           });
@@ -37,17 +38,6 @@ export default function CustomLoginPage() {
     attemptMade.current = false;
     setLoading(true);
     signIn("azure-ad", { callbackUrl: "/" });
-  };
-
-  const handleMockLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!mockEmail) return;
-    setLoading(true);
-    login({ username: mockEmail })
-      .catch((error) => {
-        notify(error?.message || "Falha na autenticação", { type: "error" });
-        setLoading(false);
-      });
   };
 
   return (
@@ -77,7 +67,7 @@ export default function CustomLoginPage() {
             {loading ? (
               <div className="flex items-center gap-2">
                 <div className="h-5 w-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
-                <span>Autenticando...</span>
+                <span>Autenticando via Microsoft...</span>
               </div>
             ) : (
               <>
@@ -92,37 +82,6 @@ export default function CustomLoginPage() {
               </>
             )}
           </button>
-
-          <div className="text-center">
-            <button
-              type="button"
-              onClick={() => setShowMock(!showMock)}
-              className="text-xs text-slate-500 hover:text-slate-400 transition-colors"
-            >
-              {showMock ? "Ocultar login alternativo" : "Desenvolvimento local / Entra ID Mock"}
-            </button>
-          </div>
-
-          {/* Dev/Mock Form (Optional) */}
-          {showMock && (
-            <form onSubmit={handleMockLogin} className="space-y-3 pt-3 border-t border-slate-800">
-              <label className="block text-xs font-medium text-slate-400">E-mail corporativo (Mock local)</label>
-              <input
-                type="email"
-                placeholder="nome@infodive.com.br"
-                value={mockEmail}
-                onChange={(e) => setMockEmail(e.target.value)}
-                className="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-              />
-              <button
-                type="submit"
-                disabled={loading || !mockEmail}
-                className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 text-sm rounded-xl transition-all disabled:opacity-50"
-              >
-                Entrar via E-mail Mock
-              </button>
-            </form>
-          )}
         </div>
 
         {/* Security Badge */}
@@ -130,7 +89,7 @@ export default function CustomLoginPage() {
           <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
-          <span>Autenticação corporativa segura via Microsoft Entra ID</span>
+          <span>Autenticação corporativa oficial via Microsoft Entra ID</span>
         </div>
       </div>
     </div>
