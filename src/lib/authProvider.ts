@@ -4,18 +4,25 @@ import { signOut, getSession } from 'next-auth/react';
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1';
 
 export const authProvider: AuthProvider = {
-    login: async ({ username }) => {
-        const idToken = (username || '').trim();
+    login: async ({ username, password }) => {
+        let payload: any = {};
+        if (password) {
+            // Login de Parceiro Externo / Agência (Email + Chave de Acesso)
+            payload = { email: (username || '').trim(), accessKey: (password || '').trim() };
+        } else {
+            // Login Oficial Microsoft Entra ID (ID Token)
+            payload = { idToken: (username || '').trim() };
+        }
 
         const response = await fetch(`${apiUrl}/auth/login`, {
             method: 'POST',
-            body: JSON.stringify({ idToken }),
+            body: JSON.stringify(payload),
             headers: new Headers({ 'Content-Type': 'application/json' }),
         });
 
         if (!response.ok) {
             const errorText = await response.text();
-            let parsedMessage = 'Falha na autenticação com a Microsoft';
+            let parsedMessage = 'Falha na autenticação';
             try {
                 const errorJson = JSON.parse(errorText);
                 parsedMessage = errorJson.message || errorJson.error || parsedMessage;
