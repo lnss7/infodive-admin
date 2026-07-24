@@ -5,7 +5,6 @@ import {
   List,
   Datagrid,
   TextField,
-  DateField,
   FunctionField,
   Filter,
   TextInput,
@@ -78,6 +77,30 @@ const getAcaoChip = (record: any) => {
   return <Chip label={acao || "-"} size="small" />;
 };
 
+const formatDataBrasilia = (record: any) => {
+  if (!record?.criadoEm) return "-";
+  try {
+    const dateStr = record.criadoEm;
+    // Se a string nao tiver o sufixo Z ou offset, adiciona para parse correto
+    const isoStr = dateStr.includes("Z") || dateStr.includes("+") ? dateStr : dateStr + "Z";
+    const date = new Date(isoStr);
+    if (isNaN(date.getTime())) return record.criadoEm;
+
+    return new Intl.DateTimeFormat("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+      timeZone: "America/Sao_Paulo",
+    }).format(date);
+  } catch {
+    return record.criadoEm;
+  }
+};
+
 export const LogAuditoriaList = () => {
   return (
     <Box sx={{ p: 1 }}>
@@ -100,20 +123,21 @@ export const LogAuditoriaList = () => {
         actions={false}
       >
         <Datagrid bulkActionButtons={false} rowClick={false}>
-          <DateField
-            source="criadoEm"
+          <FunctionField
             label="Data & Hora"
-            showTime
-            options={{ dateStyle: "short", timeStyle: "short" }}
+            sortBy="criadoEm"
+            render={(record: any) => (
+              <Typography variant="body2" sx={{ fontWeight: 500, fontFamily: "monospace" }}>
+                {formatDataBrasilia(record)}
+              </Typography>
+            )}
           />
           <FunctionField
             label="Usuário Responsável"
             render={(record: any) => (
-              <Box sx={{ display: "flex", flexDirection: "col" }}>
-                <Typography variant="body2" sx={{ fontWeight: 600, color: "text.primary" }}>
-                  {record.usuarioEmail}
-                </Typography>
-              </Box>
+              <Typography variant="body2" sx={{ fontWeight: 600, color: "text.primary" }}>
+                {record.usuarioEmail}
+              </Typography>
             )}
           />
           <FunctionField label="Ação" render={(record: any) => getAcaoChip(record)} />
