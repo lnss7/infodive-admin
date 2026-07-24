@@ -29,6 +29,7 @@ export const authProvider: AuthProvider = {
         if (data.token) {
             localStorage.setItem('token', data.token);
             localStorage.setItem('username', data.email || 'Administrador');
+            localStorage.setItem('role', data.role || 'ROLE_ADMIN');
             return Promise.resolve();
         }
 
@@ -38,6 +39,7 @@ export const authProvider: AuthProvider = {
     logout: async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
+        localStorage.removeItem('role');
         try {
             await signOut({ redirect: false });
         } catch {
@@ -53,6 +55,7 @@ export const authProvider: AuthProvider = {
             console.warn('[AUTH LOGOUT] Status 401/403 recebido do backend. Deslogando...');
             localStorage.removeItem('token');
             localStorage.removeItem('username');
+            localStorage.removeItem('role');
             return Promise.reject();
         }
         return Promise.resolve();
@@ -83,6 +86,7 @@ export const authProvider: AuthProvider = {
                         if (data.token) {
                             localStorage.setItem('token', data.token);
                             localStorage.setItem('username', data.email || 'Administrador');
+                            localStorage.setItem('role', data.role || 'ROLE_ADMIN');
                             return Promise.resolve();
                         }
                     }
@@ -96,13 +100,18 @@ export const authProvider: AuthProvider = {
         return Promise.reject();
     },
     
-    getPermissions: () => Promise.resolve(),
+    getPermissions: () => {
+        const role = localStorage.getItem('role') || 'ROLE_ADMIN';
+        const permissions = role === 'ROLE_BLOGGER' ? 'BLOGGER' : 'ADMIN';
+        return Promise.resolve(permissions);
+    },
     
     getIdentity: () => {
         const username = localStorage.getItem('username') || 'Administrador';
+        const role = localStorage.getItem('role') === 'ROLE_BLOGGER' ? 'Editor de Blog' : 'Administrador';
         return Promise.resolve({
             id: 'admin',
-            fullName: username,
+            fullName: `${username} (${role})`,
         });
     },
 };

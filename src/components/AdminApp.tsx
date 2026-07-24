@@ -1,5 +1,5 @@
 import React from 'react';
-import { Admin, Resource, defaultTheme, Layout, Menu } from 'react-admin';
+import { Admin, Resource, defaultTheme, Layout, Menu, usePermissions } from 'react-admin';
 import { Navigate } from 'react-router-dom';
 import { createTheme } from '@mui/material/styles';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -281,6 +281,26 @@ const MyMenu = () => {
   const toggleGroup = (group: string) => {
     setOpenGroups(prev => ({ ...prev, [group]: !prev[group] }));
   };
+
+  const { permissions } = usePermissions();
+  const isBlogger = permissions === 'BLOGGER';
+
+  if (isBlogger) {
+    return (
+      <Menu sx={{
+        paddingTop: 2,
+        '& .MuiMenuItem-root': {
+          borderRadius: '8px',
+          margin: '4px 8px',
+          padding: '8px 12px',
+          fontSize: '0.875rem',
+        },
+      }}>
+        <Menu.Item to="/conteudos" primaryText="Artigos / Postagens" leftIcon={<BookIcon />} />
+        <Menu.Item to="/config-blog" primaryText="Textos & Redes Sociais" leftIcon={<SettingsIcon />} />
+      </Menu>
+    );
+  }
 
   return (
     <Menu sx={{
