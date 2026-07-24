@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLogin, useNotify } from "react-admin";
 import { signIn, useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function CustomLoginPage() {
   const login = useLogin();
@@ -41,38 +42,44 @@ export default function CustomLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 p-4 font-sans text-white">
-      <div className="w-full max-w-md bg-slate-900/80 backdrop-blur-xl border border-slate-700/60 rounded-3xl p-8 shadow-2xl space-y-8">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-950 p-4 font-sans text-slate-100">
+      <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
         
-        {/* Header */}
-        <div className="text-center space-y-3">
-          <div className="inline-flex items-center justify-center p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl mb-2">
-            <span className="text-2xl font-bold tracking-tight text-indigo-400">INFODIVE</span>
-            <span className="text-xs ml-2 px-2 py-0.5 bg-indigo-500/20 text-indigo-300 rounded-full font-semibold border border-indigo-400/30">ADMIN</span>
+        {/* Logo Oficial Infodive */}
+        <div className="flex flex-col items-center justify-center space-y-3">
+          <div className="relative w-44 h-12 flex items-center justify-center">
+            <Image
+              src="/logo-infodive.png"
+              alt="Infodive Logo"
+              width={180}
+              height={50}
+              priority
+              className="object-contain"
+            />
           </div>
-          <h1 className="text-2xl font-bold text-slate-100">Painel de Controle</h1>
-          <p className="text-sm text-slate-400">
-            Acesso exclusivo para colaboradores <span className="font-semibold text-slate-200">@infodive.com.br</span>
-          </p>
+          <div className="text-center pt-2">
+            <h1 className="text-lg font-semibold text-slate-100 tracking-tight">Painel Administrativo</h1>
+            <p className="text-xs text-slate-400 mt-1">Gestão de Conteúdo e Serviços</p>
+          </div>
         </div>
 
-        {/* Action Button */}
-        <div className="space-y-4">
+        {/* Botão Oficial Microsoft */}
+        <div className="pt-2">
           <button
             type="button"
             disabled={loading}
             onClick={handleMicrosoftLogin}
-            className="w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3.5 px-5 rounded-2xl shadow-lg transition-all duration-200 transform active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200"
+            className="w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-100 text-slate-900 font-medium py-3 px-4 rounded-xl shadow-sm transition-all duration-150 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 text-sm"
           >
             {loading ? (
               <div className="flex items-center gap-2">
-                <div className="h-5 w-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
-                <span>Autenticando via Microsoft...</span>
+                <div className="h-4 w-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
+                <span>Autenticando...</span>
               </div>
             ) : (
               <>
-                {/* Microsoft Logo SVG */}
-                <svg className="w-5 h-5" viewBox="0 0 21 21" fill="none">
+                {/* Logo da Microsoft */}
+                <svg className="w-4 h-4 shrink-0" viewBox="0 0 21 21" fill="none">
                   <rect x="1" y="1" width="9" height="9" fill="#F25022" />
                   <rect x="11" y="1" width="9" height="9" fill="#7FBA00" />
                   <rect x="1" y="11" width="9" height="9" fill="#00A4EF" />
@@ -84,13 +91,13 @@ export default function CustomLoginPage() {
           </button>
         </div>
 
-        {/* Security Badge */}
-        <div className="flex items-center justify-center gap-2 pt-2 text-xs text-slate-500">
-          <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-          </svg>
-          <span>Autenticação corporativa oficial via Microsoft Entra ID</span>
+        {/* Rodapé limpo */}
+        <div className="pt-2 text-center border-t border-slate-800/80">
+          <p className="text-[11px] text-slate-500">
+            Acesso exclusivo para contas <span className="text-slate-400 font-medium">@infodive.com.br</span>
+          </p>
         </div>
+
       </div>
     </div>
   );

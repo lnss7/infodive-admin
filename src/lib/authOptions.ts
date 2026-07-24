@@ -10,6 +10,7 @@ export const authOptions: NextAuthOptions = {
       authorization: {
         params: {
           scope: "openid profile email User.Read",
+          prompt: "select_account",
         },
       },
     }),
